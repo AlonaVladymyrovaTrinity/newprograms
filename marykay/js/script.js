@@ -10,8 +10,6 @@
     var open_update_popup = document.getElementById('open_update_popup');    */
 $(document).ready(function () {
 
-
-
     $( "#open_popup" ).button().click(function() {
         $( "#pop-up" ).dialog( "open" );
     });
@@ -182,11 +180,26 @@ var onLoadProductResult = function (data) {
         tbody.append('</tr>');
     });
 
+    $( ".deletetButton" ).button({
+        icons: {
+            primary: "ui-icon-trash",
+            secondary: "ui-icon-minus"
+        },
+        text: false
+    });
+    $( ".editButton" ).button({
+        icons: {
+            primary: "ui-icon-pencil",
+            secondary: "ui-icon-gear"
+        },
+        text: false
+    });
+
     $('.editButton').click(onEditButtonClick);
     $('.deletetButton').click(onDeleteButtonClick);
 };
 
-$(function OpenUpdatePopUp() {
+$(function() {
     $( "#update-pop-up" ).dialog({
         autoOpen: false,
         height: 300,
@@ -195,7 +208,9 @@ $(function OpenUpdatePopUp() {
         buttons: {
             "Update": function () {
                 //$( this ).dialog( "close" );
+                var product =  $(this).data("product");
                 onEditComplete(product);
+                $( this ).dialog( "close" );
             },
             "Close": function() {
                 $( this ).dialog( "close" );
@@ -221,7 +236,7 @@ var onEditButtonClick = function () {
        //product.price*=2;
 
         // show popup
-        $( "#update-pop-up" ).dialog( "open" );
+        $( "#update-pop-up" ).data("product", product).dialog( "open" );
 
    /*     open_pop_up('#update-pop-up');*/
         // set data
@@ -230,9 +245,9 @@ var onEditButtonClick = function () {
         $("#upd_name").val(product.name);
         $("#upd_price").val(product.price);
         // onEditComplete(
-    /*    $('#update_product').click(function (){
+     /*  $('#update_product').click(function (){
             onEditComplete(product);
-        });   */
+        });       */
         // close popup
         //updateProduct(product);
     }
@@ -241,7 +256,7 @@ var onEditButtonClick = function () {
 var onEditComplete = function (product) {
     console.log(this.id);
     var upd_product = {};
-    upd_product.name = $("#upt_name").val();
+    upd_product.name = $("#upd_name").val();
     upd_product.price = 1 * $("#upd_price").val();
     upd_product.availability = !!$("#upd_availability").val();
     upd_product.id = product.id;
@@ -264,6 +279,7 @@ var updateProduct = function (upd_product) {
         dataType: 'text',
         success: function () {
             alert("success!");
+            loadProduct();
         },
         error: function () {
             alert("error!");
