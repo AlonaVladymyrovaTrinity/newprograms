@@ -1,4 +1,4 @@
-window.onload = function () {
+/*window.onload = function () {
     var addProd = document.getElementById('add_prod');
     var getProduct = document.getElementById('get_product');
     var close_popup = document.getElementById('close_popup');
@@ -7,40 +7,117 @@ window.onload = function () {
     var open_get_popup = document.getElementById('open_get_popup');
     var close_upd = document.getElementById('close_update_product');
     var upd_product = document.getElementById('update_product');
-    var open_update_popup = document.getElementById('open_update_popup');
+    var open_update_popup = document.getElementById('open_update_popup');    */
+$(document).ready(function () {
 
 
-    addProd.onclick = function addProduct() {
-        //     console.log('starting adding new product');
-        //     var id_prod = $("#inp1").val();
-        var s = {};
-        s.name = $("#name").val();
-        s.price = 1 * $("#price").val();
-        s.availability = !!$("#availability").val();
-        $.ajax({
-            url: '/marykay/products',
-            type: "POST",
-            data: JSON.stringify(s),
-            //data: JSON.stringify({"name": "Changed name", "price": 26, "availability": true}),
-            /*   dataType: "json",*/
-            contentType: "application/json; charset=utf-8",
-            dataType: 'text',
-            success: function () {
-                alert("success!");
-                close_pop_up('#pop-up');
-                loadProduct();
-            },
-            error: function (xhr, textStatus, textMessage) {
-                alert("error!");
-                close_pop_up('#pop-up');
+
+    $( "#open_popup" ).button().click(function() {
+        $( "#pop-up" ).dialog( "open" );
+    });
+
+    $(function() {
+        $( "#pop-up" ).dialog({
+            autoOpen: false,
+            height: 300,
+            width: 350,
+            modal: true,
+            buttons: {
+                "addProd": function addProduct() {
+                 //   $('#addProd').click(function addProduct() {
+                        //     console.log('starting adding new product');
+                        //     var id_prod = $("#inp1").val();
+                        var s = {};
+                        s.name = $("#name").val();
+                        s.price = 1 * $("#price").val();
+                        s.availability = !!$("#availability").val();
+                        $.ajax({
+                            url: '/marykay/products',
+                            type: "POST",
+                            data: JSON.stringify(s),
+                            //data: JSON.stringify({"name": "Changed name", "price": 26, "availability": true}),
+                            /*   dataType: "json",*/
+                            contentType: "application/json; charset=utf-8",
+                            dataType: 'text',
+                            success: function () {
+                                alert("success!");
+                                $("#pop-up").dialog( "close" );
+                                /*       close_pop_up('#pop-up');*/
+                                loadProduct();
+                            },
+                            error: function (xhr, textStatus, textMessage) {
+                                alert("error!");
+                                $("#pop-up").dialog( "close" );
+                                /*        close_pop_up('#pop-up');*/
+                            }
+                        });
+                        //   $("#prod td").each(function(){$(this).parent().remove()});
+                        //   loadProduct();
+
+                  //  });
+                },
+                Cancel: function() {
+                    $( this ).dialog( "close" );
+                }
             }
         });
-        //   $("#prod td").each(function(){$(this).parent().remove()});
-        //   loadProduct();
+    });
 
-    };
+    $( "#open_get_popup" ).button().click(function() {
+        $( "#get-pop-up" ).dialog( "open" );
+    });
 
-    close_popup.onclick = function closePopup() {
+    $(function() {
+        $( "#get-pop-up" ).dialog({
+            autoOpen: false,
+            height: 300,
+            width: 350,
+            modal: true,
+            buttons: {
+                "Find": function getSpecificProduct() {
+                //    $('#getProduct').click(function getSpecificProduct() {
+                    var id = $("#id_prod").val();
+                    $.ajax({
+                        type: "GET",
+                        url: "/marykay/products/" + id,
+                        dataType: 'json',
+                        success: function (data) {
+                            $.each(data, function (k, v) {
+                                if (k != "version") {
+                                    if (k == "availability") {
+                                        alert(v);
+                                        $("#find_rez").append("availability: " + v + ", <br>");
+                                    }
+                                    else if (k == "id") {
+                                        $("#find_rez").append("id: " + v + ", <br>");
+                                        alert(v);
+                                    }
+                                    else if (k == "name") {
+                                        $("#find_rez").append("name: " + v + ", <br>");
+                                        alert(v);
+                                    }
+                                    else if (k == "price") {
+                                        $("#find_rez").append("price: " + v + ", <br>");
+                                        alert(v);
+                                    }
+                                }
+                            });
+                        },
+                        error: function () {
+                            alert("not found!");
+                        }
+                    });
+                },
+                "Close": function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
+    });
+
+
+
+ /*   close_popup.onclick = function closePopup() {
         close_pop_up('#pop-up');
     }
     open_popup.onclick = function openPopup() {
@@ -54,47 +131,21 @@ window.onload = function () {
 
     close_get.onclick = function closeGetProduct() {
         close_pop_up('#get-pop-up');
-    }
+    }             */
 
     //open_update_popup.onclick = function openUpdatePopup(){
     //    open_pop_up('#update-pop-up');
     // }
 
-    close_upd.onclick = function closeUpdateProduct() {
+ /*   close_upd.onclick = function closeUpdateProduct() {
         close_pop_up('#update-pop-up');
-    }
-    getProduct.onclick = function getSpecificProduct() {
-        var id = $("#id_prod").val();
-        $.ajax({
-            type: "GET",
-            url: "/marykay/products/" + id,
-            dataType: 'json',
-            success: function (data) {
-                $.each(data, function (k, v) {
-                    if (k != "version") {
-                        if (k == "availability") {
-                            $(".rez").append("availability: " + v + ", <br>");
-                        }
-                        else if (k == "id") {
-                            $(".rez").append("id: " + v + ", <br>");
-                        }
-                        else if (k == "name") {
-                            $(".rez").append("name: " + v + ", <br>");
-                        }
-                        else if (k == "price") {
-                            $(".rez").append("price: " + v + ", <br>");
-                        }
-                    }
-                });
-            },
-            error: function () {
-                alert("not found!");
-            }
-        });
-    };
+    }              */
 
 
-};
+
+});
+
+/*};*/
 
 $(document).ready(function () {
     loadProduct();
@@ -135,6 +186,23 @@ var onLoadProductResult = function (data) {
     $('.deletetButton').click(onDeleteButtonClick);
 };
 
+$(function OpenUpdatePopUp() {
+    $( "#update-pop-up" ).dialog({
+        autoOpen: false,
+        height: 300,
+        width: 350,
+        modal: true,
+        buttons: {
+            "Update": function () {
+                //$( this ).dialog( "close" );
+                onEditComplete(product);
+            },
+            "Close": function() {
+                $( this ).dialog( "close" );
+            }
+        }
+    });
+});
 
 var onEditButtonClick = function () {
     //console.log(this.id);
@@ -153,16 +221,18 @@ var onEditButtonClick = function () {
        //product.price*=2;
 
         // show popup
-        open_pop_up('#update-pop-up');
+        $( "#update-pop-up" ).dialog( "open" );
+
+   /*     open_pop_up('#update-pop-up');*/
         // set data
         $("#upd_availability").val(product.availability);
         //$("#upd_id_prod").val(product.id);
-        $("#upt_name").val(product.name);
+        $("#upd_name").val(product.name);
         $("#upd_price").val(product.price);
         // onEditComplete(
-        $('#update_product').click(function (){
+    /*    $('#update_product').click(function (){
             onEditComplete(product);
-        });
+        });   */
         // close popup
         //updateProduct(product);
     }
@@ -232,7 +302,7 @@ var deleteProduct = function(productId) {
 };
 
 
-function open_pop_up(box) {
+/*function open_pop_up(box) {
     $("#overlay").show();
     $(box).center_pop_up();
     $(box).show(500);
@@ -251,4 +321,4 @@ $(document).ready(function () {
         this.css('left', ($(window).width() - this.width()) / 2 + $(window).scrollLeft() + 'px');
     }
 
-});
+});  */
