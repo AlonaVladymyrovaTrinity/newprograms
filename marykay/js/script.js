@@ -28,7 +28,7 @@ $(document).ready(function () {
                         var s = {};
                         s.name = $("#name").val();
                         s.price = 1 * $("#price").val();
-                        s.availability = !!$("#availability").val();
+                        s.availability = $("#availability").prop("checked");   ///.is(':checked');
                         $.ajax({
                             url: '/marykay/products',
                             type: "POST",
@@ -175,22 +175,20 @@ var onLoadProductResult = function (data) {
         tbody.append('<td>' + value.name + '</td>');
         tbody.append('<td>' + value.price + '</td>');
         //$("#prod").find("tbody").append($("<td><input type='button' onclick='deleteProduct(" + value['id'] + ")' value='Delete Product'/></td>"));
-        tbody.append('<td><input id="id_' + value.id + '" type="button" class="deletetButton" value="Delete Product"/></td>');
-        tbody.append('<td><input id="product_' + value.id + '" type="button" class="editButton" value="Update Product"/></td>');
+        tbody.append('<td><button id="id_' + value.id + '" type="button" class="deletetButton" value="Delete Product">Delete Product</button></td>');
+        tbody.append('<td><button id="product_' + value.id + '" type="button" class="editButton" value="Update Product">Update Product</button></td>');
         tbody.append('</tr>');
     });
 
     $( ".deletetButton" ).button({
         icons: {
-            primary: "ui-icon-trash",
-            secondary: "ui-icon-minus"
+            primary: "ui-icon-trash"
         },
         text: false
     });
     $( ".editButton" ).button({
         icons: {
-            primary: "ui-icon-pencil",
-            secondary: "ui-icon-gear"
+            primary: "ui-icon-pencil"
         },
         text: false
     });
