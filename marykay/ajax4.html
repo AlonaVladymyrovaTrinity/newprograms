@@ -24,23 +24,16 @@
                  <label for="name">Название</label>
                  <input type="text" name="name_prod" id="name" class="text ui-widget-content ui-corner-all" />
                  <label for="price">Цена</label>
-                 <input type="text" name="price" id="price" value="" class="text ui-widget-content ui-corner-all" />
+                 <input type="number" name="price" id="price" value="" class="text ui-widget-content ui-corner-all" />
                  <label for="availability">Наличие</label>
                  <input type="checkbox" name="availability" id="availability" checked="checked" class="text ui-widget-content ui-corner-all"/>
              </fieldset>
          </form>
 
-       <!--           <table>
-                                <tr><td>Название<td><input id="name" name="name_prod"  size=30></tr>
-                                <tr><td>Цена<td><input id="price" name="price"  size=30></tr>
-                                    <tr><td>Наличие<td><input id="availability" name="availability" size=30></tr>
-                    <tr><td colspan=2><input id='add_prod' type='button' value='Добавить'/><input id='close_popup' type='button' value='Закрыть'/></td></tr>
-                    </table>-->
           </div>
 
               <div id="overlay"></div>
 
-          <!--   <input type="button" onclick="updateProduct()" value="Update Product"/>-->
   <input type="button" id="open_get_popup"  value="Get Specific Product"/>
 
 <div id="get-pop-up" title="Find Product">
@@ -50,12 +43,6 @@
               <input type="text" name="id_prod" id="id_prod" class="text ui-widget-content ui-corner-all" />
           </fieldset>
       </form>
-    <!--    <table>
-
-                <tr><td>Идентификатор<td><input id="id_prod" name="id_prod"  size=30></tr>
-               <tr><td colspan=2><input id='get_product' type='button' value='Найти'/> <input id='close_get_product' type='button' value='Закрыть'/></td></tr>
-                <tr><td colspan=2><div class="rez"></div></td></tr>
-            </table> -->
       </div>
 
       <div id="update-pop-up" title="Update Product">
@@ -67,18 +54,9 @@
                        <input type="text" name="name_prod" id="upd_name" class="text ui-widget-content ui-corner-all" />
                        <label for="price">Цена</label>
                        <input type="text" name="price" id="upd_price" value="" class="text ui-widget-content ui-corner-all" />
-                       <div id="find_rez"></div>
+                       <div class="find_rez"></div>
                    </fieldset>
                </form>
-
-          <!--       <table>
-                       <tr><td>Наличие<td><input id="upd_availability" name="availability" size=30></tr>
-                       //    <tr><td>Идентификатор<td><input id="upd_id_prod" name="id_prod"  size=30></tr>
-                    <tr><td>Название<td><input id="upt_name" name="name_prod"  size=30></tr>
-                    <tr><td>Цена<td><input id="upd_price" name="price"  size=30></tr>
-               <!--       <tr><td colspan=2><input id='update_product' type='button' value='Обновить'/> <input id='close_update_product' type='button' value='Закрыть'/></td></tr>
-                           <tr><td colspan=2><div class="rez"></div></td></tr>
-                      </table>-->
            </div>
 
 
